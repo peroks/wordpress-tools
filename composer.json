@@ -1,0 +1,8 @@
+{
+	"$schema": "https://getcomposer.org/schema.json",
+	"name": "peroks/peroks-basic-tools",
+	"description": "Basic tools and classes for use in other WordPress plugins.",
+	"type": "wordpress-plugin",
+	"license": "MIT",
+	"version": "0.1.0"
+}
