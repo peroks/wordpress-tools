@@ -62,7 +62,7 @@ class Plugin {
 	/**
 	 * The plugin global action hooks.
 	 */
-	const ACTION_CLASS_CREATED = self::PREFIX . '/class_created';
+	const ACTION_CLASS_LOADED = self::PREFIX . '/class_loaded';
 
 	/**
 	 * Constructor.
