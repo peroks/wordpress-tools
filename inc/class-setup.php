@@ -29,9 +29,12 @@ class Setup {
 		}
 	}
 
-	public function init_github_updater() {
+	/**
+	 * Activate plugin update from GitHun.
+	 */
+	public function init_github_updater(): void {
 		if ( defined( 'GITHUB_TOKEN' ) && GITHUB_TOKEN ) {
-			$update = new Github_Updater( Plugin::FILE, GITHUB_TOKEN );
+			Github_Updater::create( Plugin::FILE, GITHUB_TOKEN );
 		}
 	}
 
