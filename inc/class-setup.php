@@ -30,18 +30,18 @@ class Setup {
 	}
 
 	/**
-	 * Activate plugin update from GitHun.
-	 */
-	public function init_github_updater(): void {
-		Github_Updater::create( Plugin::FILE );
-	}
-
-	/**
 	 * Loads the translated strings (if any).
 	 */
 	public function load_translations(): void {
 		$path = dirname( plugin_basename( Plugin::FILE ) ) . '/languages';
 		load_plugin_textdomain( 'peroks-basic-tools', false, $path );
+	}
+
+	/**
+	 * Enable plugin update from GitHub.
+	 */
+	public function init_github_updater(): void {
+		Github_Updater::create( Plugin::FILE );
 	}
 
 	/**
