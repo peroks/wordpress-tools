@@ -12,8 +12,8 @@
  * Plugin URI:        https://github.com/peroks/peroks-basic-tools
  * Update URI:        https://github.com/peroks/peroks-basic-tools
  *
- * Version:           0.1.0
- * Stable tag:        0.1.0
+ * Version:           0.2.0
+ * Stable tag:        0.2.0
  * Requires at least: 6.6
  * Tested up to:      6.6
  * Requires PHP:      8.2
