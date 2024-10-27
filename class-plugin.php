@@ -77,6 +77,7 @@ class Plugin {
 			// Basic tools.
 			__NAMESPACE__ . '\\Github_Updater' => static::path( 'inc/class-github-updater.php' ),
 			__NAMESPACE__ . '\\Plugin_Data'    => static::path( 'inc/class-plugin-data.php' ),
+			__NAMESPACE__ . '\\Settings_Page'  => static::path( 'inc/class-settings-page.php' ),
 			__NAMESPACE__ . '\\Utils'          => static::path( 'inc/class-utils.php' ),
 		] );
 
