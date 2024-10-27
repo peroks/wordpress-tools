@@ -21,9 +21,7 @@ class Setup {
 	protected function __construct() {
 		add_action( 'init', [ $this, 'load_translations' ] );
 
-		if ( is_admin() ) {
-			add_action( 'init', [ $this, 'init_github_updater' ] );
-		} else {
+		if ( empty( is_admin() ) ) {
 			add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_styles' ] );
 			add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
 		}
@@ -35,13 +33,6 @@ class Setup {
 	public function load_translations(): void {
 		$path = dirname( plugin_basename( Plugin::FILE ) ) . '/languages';
 		load_plugin_textdomain( 'peroks-basic-tools', false, $path );
-	}
-
-	/**
-	 * Enable plugin update from GitHub.
-	 */
-	public function init_github_updater(): void {
-		Github_Updater::create( Plugin::FILE );
 	}
 
 	/**

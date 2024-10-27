@@ -12,8 +12,8 @@
  * Plugin URI:        https://github.com/peroks/peroks-basic-tools
  * Update URI:        https://github.com/peroks/peroks-basic-tools
  *
- * Version:           0.2.0
- * Stable tag:        0.2.0
+ * Version:           0.2.1
+ * Stable tag:        0.2.1
  * Requires at least: 6.6
  * Tested up to:      6.6
  * Requires PHP:      8.2
@@ -72,6 +72,7 @@ class Plugin {
 	protected function autoload(): void {
 		$classes = apply_filters( self::FILTER_CLASS_PATHS, [
 			// Plugin setup.
+			__NAMESPACE__ . '\\Admin'          => static::path( 'inc/class-admin.php' ),
 			__NAMESPACE__ . '\\Setup'          => static::path( 'inc/class-setup.php' ),
 
 			// Basic tools.
@@ -94,6 +95,10 @@ class Plugin {
 	 */
 	protected function run(): void {
 		Setup::instance();
+
+		if ( is_admin() ) {
+			Admin::instance();
+		}
 	}
 
 	/**
