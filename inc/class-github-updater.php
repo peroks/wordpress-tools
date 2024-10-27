@@ -51,10 +51,10 @@ class Github_Updater {
 	 * Creates a GitHub Updater instance.
 	 *
 	 * @param string $plugin_file The plugin file.
-	 * @param string $repository_token A valid token to access the gitHub repository.
+	 * @param string $repository_token A GitHub token to access a private repository.
 	 */
-	public static function create( string $plugin_file, string $repository_token ): static|null {
-		if ( is_admin() && $plugin_file && $repository_token ) {
+	public static function create( string $plugin_file, string $repository_token = '' ): static|null {
+		if ( is_admin() && $plugin_file ) {
 			return new static( $plugin_file, $repository_token );
 		}
 		return null;
@@ -64,15 +64,15 @@ class Github_Updater {
 	 * Constructor.
 	 *
 	 * @param string $plugin_file The plugin file.
-	 * @param string $repository_token A valid token to access the gitHub repository.
+	 * @param string $repository_token A GitHub token to access a private repository.
 	 */
-	public function __construct( string $plugin_file, string $repository_token ) {
+	public function __construct( string $plugin_file, string $repository_token = '' ) {
 		if ( is_admin() ) {
 			$this->plugin           = new Plugin_Data( $plugin_file );
 			$this->repository_url   = $this->plugin->UpdateURI;
 			$this->repository_token = $repository_token;
 
-			if ( $this->repository_url && $this->repository_token ) {
+			if ( $this->repository_url ) {
 				add_filter( 'pre_set_site_transient_update_plugins', [ $this, 'update_plugins' ] );
 				add_filter( 'plugins_api', [ $this, 'plugins_api' ], 10, 3 );
 				add_filter( 'upgrader_pre_download', [ $this, 'upgrader_pre_download' ], 10, 4 );
@@ -133,7 +133,7 @@ class Github_Updater {
 				'name'              => $this->plugin->Name,
 				'slug'              => $slug,
 				'plugin'            => $this->plugin->Base,
-				'version'           => trim( $release->tag_name, 'v' ),
+				'version'           => ltrim( $release->tag_name, 'v' ),
 				'author'            => $this->plugin->Author,
 				'author_profile'    => $this->plugin->AuthorURI,
 				'last_updated'      => $release->published_at,
@@ -163,7 +163,7 @@ class Github_Updater {
 	public function upgrader_pre_download( bool $reply, string $package, WP_Upgrader $upgrader, array $hook_extra ): bool {
 		$plugin_base = $hook_extra['plugin'] ?? null;
 
-		if ( $this->plugin->Base === $plugin_base ) {
+		if ( $this->plugin->Base === $plugin_base && $this->repository_token ) {
 			add_filter( 'http_request_args', function( $args, $url ) use ( $package ) {
 				if ( isset( $args['filename'] ) && $url === $package ) {
 					$args['headers']['Authorization'] = "token {$this->repository_token}";
@@ -217,7 +217,9 @@ class Github_Updater {
 			$args = [];
 
 			if ( 'github.com' === $host && strpos( $path, '/' ) ) {
-				$args['headers']['Authorization'] = "token {$this->repository_token}";
+				if ( $this->repository_token ) {
+					$args['headers']['Authorization'] = "token {$this->repository_token}";
+				}
 
 				$request  = "https://api.github.com/repos/{$path}/releases";
 				$response = wp_remote_get( $request, $args );
