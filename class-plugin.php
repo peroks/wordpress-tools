@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Basic Plugin Tools
  * Plugin URI:        https://github.com/peroks/peroks-basic-tools
- * Update URI:        https://github.com/peroks/peroks-basic-tools
+ * Update URI:        https://github.com/silverscreen-tours/photo-credit
  * Description:       Basic tools and classes for use in other WordPress plugins.
  *
  * Text Domain:       peroks-basic-tools
@@ -78,10 +78,12 @@ class Plugin {
 	protected function autoload(): void {
 		$classes = apply_filters( self::FILTER_CLASS_PATHS, [
 			// Plugin setup.
-			__NAMESPACE__ . '\\Setup'         => static::path( 'inc/class-setup.php' ),
+			__NAMESPACE__ . '\\Setup'          => static::path( 'inc/class-setup.php' ),
 
-			// Tools.
+			// Basic tools.
 			__NAMESPACE__ . '\\Github_Updater' => static::path( 'inc/class-github-updater.php' ),
+			__NAMESPACE__ . '\\Plugin_Data'    => static::path( 'inc/class-plugin-data.php' ),
+			__NAMESPACE__ . '\\Utils'          => static::path( 'inc/class-utils.php' ),
 		] );
 
 		spl_autoload_register( function( $name ) use ( $classes ) {
@@ -127,6 +129,6 @@ class Plugin {
 }
 
 // Registers and runs the main plugin class.
-if ( defined( 'ABSPATH' ) ) {
+if ( defined( 'ABSPATH' ) && ABSPATH ) {
 	add_action( 'plugins_loaded', [ Plugin::class, 'instance' ] );
 }
