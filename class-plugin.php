@@ -1,8 +1,6 @@
 <?php
 /**
  * Plugin Name:       Basic Plugin Tools
- * Plugin URI:        https://github.com/peroks/peroks-basic-tools
- * Update URI:        https://github.com/silverscreen-tours/photo-credit
  * Description:       Basic tools and classes for use in other WordPress plugins.
  *
  * Text Domain:       peroks-basic-tools
@@ -10,6 +8,9 @@
  *
  * Author:            Per Egil Roksvaag
  * Author URI:        https://github.com/peroks
+ *
+ * Plugin URI:        https://github.com/peroks/peroks-basic-tools
+ * Update URI:        https://github.com/peroks/peroks-basic-tools
  *
  * Version:           0.1.0
  * Stable tag:        0.1.0
@@ -30,11 +31,11 @@ class Plugin {
 	use Singleton;
 
 	/**
-	 * The plugin version, should match the "Version" field in the plugin header.
+	 * The full path to this file.
 	 *
-	 * @var string The plugin version.
+	 * @var string The plugin file.
 	 */
-	const VERSION = '0.1.0';
+	const FILE = __FILE__;
 
 	/**
 	 * The plugin prefix, Use lowercase and underscores as word separator.
@@ -42,13 +43,6 @@ class Plugin {
 	 * @var string The plugin prefix (underscore).
 	 */
 	const PREFIX = 'peroks_basic_tools';
-
-	/**
-	 * The full path to this file.
-	 *
-	 * @var string The plugin file.
-	 */
-	const FILE = __FILE__;
 
 	/**
 	 * The plugin global filter hooks.
@@ -99,6 +93,13 @@ class Plugin {
 	 */
 	protected function run(): void {
 		Setup::instance();
+	}
+
+	/**
+	 * Gets the current plugin version.
+	 */
+	public static function version(): string {
+		return Plugin_Data::create( self::FILE )->Version;
 	}
 
 	/**
