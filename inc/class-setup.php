@@ -21,9 +21,17 @@ class Setup {
 	protected function __construct() {
 		add_action( 'init', [ $this, 'load_translations' ] );
 
-		if ( empty( is_admin() ) ) {
+		if ( is_admin() ) {
+			add_action( 'init', [ $this, 'init_github_updater' ] );
+		} else {
 			add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_styles' ] );
 			add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
+		}
+	}
+
+	public function init_github_updater() {
+		if ( defined( 'GITHUB_TOKEN' ) && GITHUB_TOKEN ) {
+			$update = new Github_Updater( Plugin::FILE, GITHUB_TOKEN );
 		}
 	}
 
