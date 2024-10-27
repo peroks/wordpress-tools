@@ -17,7 +17,10 @@ namespace peroks\wp\plugin\tools;
 class Admin {
 	use Singleton;
 
-	const SETTINGS_PAGE_SLUG     = 'peroks-basic-tools';
+	// The plugin settings page slug.
+	const SETTINGS_PAGE_SLUG = 'peroks-basic-tools';
+
+	// Section and option ids.
 	const SECTION_GITHUB_UPDATER = Plugin::PREFIX . '/github-updater';
 	const OPTION_GITHUB_TOKEN    = Plugin::PREFIX . '/github-token';
 
@@ -25,11 +28,9 @@ class Admin {
 	 * Constructor.
 	 */
 	protected function __construct() {
-		if ( is_admin() ) {
-			add_action( 'init', [ $this, 'enable_github_updater' ] );
-			add_action( 'admin_menu', [ $this, 'admin_menu' ] );
-			add_action( 'admin_init', [ $this, 'admin_init' ] );
-		}
+		add_action( 'init', [ $this, 'enable_github_updater' ] );
+		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
+		add_action( 'admin_init', [ $this, 'admin_init' ] );
 	}
 
 	/**
