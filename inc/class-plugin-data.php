@@ -52,6 +52,15 @@ class Plugin_Data {
 	protected static array $cache = [];
 
 	/**
+	 * Creates a new class instance.
+	 *
+	 * @param string $plugin_file The plugin file.
+	 */
+	public static function create( string $plugin_file ): static {
+		return new static( $plugin_file );
+	}
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $plugin_file The plugin file.
