@@ -77,7 +77,11 @@ class Plugin {
 	 */
 	protected function autoload(): void {
 		$classes = apply_filters( self::FILTER_CLASS_PATHS, [
-			__NAMESPACE__ . '\\Setup' => static::path( 'inc/class-setup.php' ),
+			// Plugin setup.
+			__NAMESPACE__ . '\\Setup'         => static::path( 'inc/class-setup.php' ),
+
+			// Tools.
+			__NAMESPACE__ . '\\Github_Updater' => static::path( 'inc/class-github-updater.php' ),
 		] );
 
 		spl_autoload_register( function( $name ) use ( $classes ) {
