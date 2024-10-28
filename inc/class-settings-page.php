@@ -9,7 +9,7 @@
 // phpcs:disable Squiz.Commenting.FunctionComment.MissingParamName
 
 declare( strict_types = 1 );
-namespace peroks\wp\plugin\tools;
+namespace Peroks\WP\Plugin\Tools;
 
 /**
  * A helper class for creating and populating a simple settings page.´

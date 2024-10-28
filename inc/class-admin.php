@@ -9,7 +9,7 @@
 // phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
 declare( strict_types = 1 );
-namespace peroks\wp\plugin\tools;
+namespace Peroks\WP\Plugin\Tools;
 
 /**
  * Plugin admin setup.

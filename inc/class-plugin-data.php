@@ -6,7 +6,7 @@
  */
 
 declare( strict_types = 1 );
-namespace peroks\wp\plugin\tools;
+namespace Peroks\WP\Plugin\Tools;
 
 /**
  * Utility class for accessing WordPress plugin data.
