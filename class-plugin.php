@@ -108,7 +108,6 @@ class Plugin {
 	public static function version(): string {
 		$version = Plugin_Data::create( self::FILE )->Version;
 		return apply_filters( self::FILTER_PLUGIN_VERSION, $version, static::class );
-
 	}
 
 	/**
