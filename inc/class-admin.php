@@ -3,7 +3,6 @@
  * Plugin admin setup.
  *
  * @author Per Egil Roksvaag
- * @license MIT
  */
 
 // phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase

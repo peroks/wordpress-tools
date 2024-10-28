@@ -3,7 +3,6 @@
  * Implements the singleton pattern.
  *
  * @author Per Egil Roksvaag
- * @license MIT
  */
 
 declare( strict_types = 1 );
