@@ -3,7 +3,6 @@
  * Static helpers and utilities.
  *
  * @author Per Egil Roksvaag
- * @license MIT
  */
 
 declare( strict_types = 1 );

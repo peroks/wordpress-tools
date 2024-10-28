@@ -3,7 +3,6 @@
  * Plugin setup.
  *
  * @author Per Egil Roksvaag
- * @license MIT
  */
 
 declare( strict_types = 1 );
