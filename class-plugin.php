@@ -22,7 +22,7 @@
 declare( strict_types = 1 );
 namespace Peroks\WP\Plugin\Tools;
 
-require_once 'inc/trait-singleton.php';
+require_once __DIR__ . '/inc/trait-singleton.php';
 
 /**
  * The plugin main class.
@@ -50,6 +50,7 @@ class Plugin {
 	const FILTER_CLASS_NAME     = self::PREFIX . '/class_name';
 	const FILTER_CLASS_INSTANCE = self::PREFIX . '/class_instance';
 	const FILTER_CLASS_PATHS    = self::PREFIX . '/class_paths';
+	const FILTER_PLUGIN_VERSION = self::PREFIX . '/plugin_version';
 	const FILTER_PLUGIN_PATH    = self::PREFIX . '/plugin_path';
 	const FILTER_PLUGIN_URL     = self::PREFIX . '/plugin_url';
 
@@ -105,7 +106,9 @@ class Plugin {
 	 * Gets the current plugin version.
 	 */
 	public static function version(): string {
-		return Plugin_Data::create( self::FILE )->Version;
+		$version = Plugin_Data::create( self::FILE )->Version;
+		return apply_filters( self::FILTER_PLUGIN_VERSION, $version, static::class );
+
 	}
 
 	/**
