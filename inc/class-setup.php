@@ -7,7 +7,7 @@
  */
 
 declare( strict_types = 1 );
-namespace peroks\wp\plugin\tools;
+namespace Peroks\WP\Plugin\Tools;
 
 /**
  * Plugin setup.
