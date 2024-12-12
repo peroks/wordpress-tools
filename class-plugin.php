@@ -12,10 +12,10 @@
  * Plugin URI:        https://github.com/peroks/peroks-basic-tools
  * Update URI:        https://github.com/peroks/peroks-basic-tools
  *
- * Version:           0.2.1
- * Stable tag:        0.2.1
+ * Version:           0.2.4
+ * Stable tag:        0.2.4
  * Requires at least: 6.6
- * Tested up to:      6.6
+ * Tested up to:      6.7
  * Requires PHP:      8.2
  */
 
