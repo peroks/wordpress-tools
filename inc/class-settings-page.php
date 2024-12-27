@@ -158,7 +158,7 @@ class Settings_Page {
 	public function plugin_action_links( array $actions ): array {
 		array_unshift( $actions, vsprintf( '<a href="%s">%s</a>', [
 			esc_url( menu_page_url( $this->slug, false ) ),
-			esc_html__( 'Settings' ),
+			esc_html__( 'Settings' ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain
 		] ) );
 
 		return $actions;
@@ -416,11 +416,11 @@ class Settings_Page {
 				$input = vsprintf( '<input type="radio" name="%s" value="%s"%s>', [
 					esc_attr( $param->option ),
 					esc_attr( $key ),
-					boolval( $key === $value ) ? ' checked' : '',
+					$key === $value ? ' checked' : '',
 				] );
 				printf( '<p><label>%s %s</label></p> ', $input, esc_html( $label ) ); // phpcs:ignore
 			}
-		}, $this->slug, $param->section, [] );
+		}, $this->slug, $param->section );
 	}
 
 	/**

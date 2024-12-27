@@ -12,11 +12,11 @@
  * Plugin URI:        https://github.com/peroks/peroks-basic-tools
  * Update URI:        https://github.com/peroks/peroks-basic-tools
  *
- * Version:           0.2.4
- * Stable tag:        0.2.4
+ * Version:           0.2.5
+ * Stable tag:        0.2.5
  * Requires at least: 6.6
  * Tested up to:      6.7
- * Requires PHP:      8.2
+ * Requires PHP:      8.1
  */
 
 declare( strict_types = 1 );
@@ -83,7 +83,7 @@ class Plugin {
 			__NAMESPACE__ . '\\Utils'          => static::path( 'inc/class-utils.php' ),
 		] );
 
-		spl_autoload_register( function( $name ) use ( $classes ) {
+		spl_autoload_register( function ( $name ) use ( $classes ) {
 			if ( array_key_exists( $name, $classes ) ) {
 				require $classes[ $name ];
 			}

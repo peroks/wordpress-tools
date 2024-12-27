@@ -47,7 +47,7 @@ class Admin {
 		$plugin = Plugin_Data::create( Plugin::FILE );
 
 		Settings_Page::register_page( self::SETTINGS_PAGE_SLUG, [
-			'page_title'      => sprintf( '%s %s', $plugin->Name, __( 'Settings' ) ),
+			'page_title'      => sprintf( '%s %s', $plugin->Name, __( 'Settings' ) ), // phpcs:ignore
 			'menu_title'      => $plugin->Name,
 			'plugin_basename' => $plugin->Base,
 		] );

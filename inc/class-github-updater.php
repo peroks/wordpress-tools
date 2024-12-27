@@ -164,7 +164,7 @@ class Github_Updater {
 		$plugin_base = $hook_extra['plugin'] ?? null;
 
 		if ( $this->plugin->Base === $plugin_base && $this->repository_token ) {
-			add_filter( 'http_request_args', function( $args, $url ) use ( $package ) {
+			add_filter( 'http_request_args', function ( $args, $url ) use ( $package ) {
 				if ( isset( $args['filename'] ) && $url === $package ) {
 					$args['headers']['Authorization'] = "token {$this->repository_token}";
 				}
@@ -231,7 +231,7 @@ class Github_Updater {
 
 				if ( 200 === $status ) {
 					$releases = json_decode( wp_remote_retrieve_body( $response ) );
-					$releases = array_filter( (array) $releases, function( $release ) {
+					$releases = array_filter( (array) $releases, function ( $release ) {
 						return isset( $release->draft ) && false === $release->draft;
 					} );
 

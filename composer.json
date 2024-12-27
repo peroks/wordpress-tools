@@ -1,8 +1,42 @@
 {
-	"$schema": "https://getcomposer.org/schema.json",
 	"name": "peroks/peroks-basic-tools",
 	"description": "Basic tools and classes for use in other WordPress plugins.",
-	"type": "wordpress-plugin",
 	"license": "MIT",
-	"version": "0.2.4"
+	"type": "wordpress-plugin",
+	"version": "0.2.5",
+	"authors": [
+		{
+			"name": "Per Egil Roksvaag",
+			"homepage": "https://github.com/peroks"
+		}
+	],
+	"require": {
+		"php": ">=8.1"
+	},
+	"require-dev": {
+		"ergebnis/composer-normalize": "^2.45.0",
+		"wp-coding-standards/wpcs": "^3.1.0"
+	},
+	"minimum-stability": "stable",
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"ergebnis/composer-normalize": true
+		},
+		"platform": {
+			"php": "8.1"
+		},
+		"sort-packages": true
+	},
+	"scripts": {
+		"build-deploy": "@composer install --no-dev",
+		"build-install": "@composer install",
+		"build-lock": "@composer update --with-all-dependencies --no-install",
+		"build-normalize": "@composer normalize",
+		"build-update": "@composer update --with-all-dependencies",
+		"clean": "rm -rf ./vendor",
+		"format": "./vendor/bin/phpcbf ./*.php ./inc",
+		"lint": "./vendor/bin/phpcs ./*.php ./inc",
+		"outdated-check": "@composer outdated"
+	}
 }
