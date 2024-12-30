@@ -271,7 +271,7 @@ class Settings_Page {
 		$param = (object) wp_parse_args( $args, [
 			'option'      => '',
 			'section'     => 'default',
-			'default'     => 0,
+			'default'     => [],
 			'label'       => '',
 			'description' => '',
 			'terms'       => [],
@@ -279,9 +279,11 @@ class Settings_Page {
 
 		register_setting( $this->slug, $param->option, [
 			'type'              => 'array',
-			'default'           => [],
-			'sanitize_callback' => $param->sanitize ?? function ( $value ): array { // phpcs:ignore
-				return (array) $value;
+			'default'           => $param->default,
+			'sanitize_callback' => $param->sanitize ?? function ( $value ) use ( $param ): array { // phpcs:ignore
+				$value   = (array) $value;
+				$is_list = array_is_list( $param->terms );
+				return $is_list ? array_map( 'sanitize_text_field', $value ) : array_map( 'intval', $value );
 			},
 		] );
 
@@ -333,10 +335,10 @@ class Settings_Page {
 		] );
 
 		register_setting( $this->slug, $param->option, [
-			'type'              => 'string',
+			'type'              => is_int( $param->default ) ? 'integer' : 'string',
 			'default'           => $param->default,
-			'sanitize_callback' => $param->sanitize ?? function ( $value ): string { // phpcs:ignore
-				return sanitize_text_field( (string) $value );
+			'sanitize_callback' => $param->sanitize ?? function ( $value ) use ( $param ): string|int { // phpcs:ignore
+				return is_int( $param->default ) ? intval( $value ) : sanitize_text_field( $value );
 			},
 		] );
 
@@ -398,10 +400,10 @@ class Settings_Page {
 		] );
 
 		register_setting( $this->slug, $param->option, [
-			'type'              => 'string',
-			'default'           => [],
-			'sanitize_callback' => $param->sanitize ?? function ( $value ): string { // phpcs:ignore
-				return (string) $value;
+			'type'              => is_int( $param->default ) ? 'integer' : 'string',
+			'default'           => $param->default,
+			'sanitize_callback' => $param->sanitize ?? function ( $value ) use ( $param ): string|int { // phpcs:ignore
+				return is_int( $param->default ) ? intval( $value ) : sanitize_text_field( $value );
 			},
 		] );
 
