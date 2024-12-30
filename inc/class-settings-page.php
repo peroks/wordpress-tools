@@ -291,10 +291,11 @@ class Settings_Page {
 			}
 
 			printf( '<p class="description">%s</p>', wp_kses_post( $param->description ) );
-			$value = get_option( $param->option ) ?: [];
+			$value   = get_option( $param->option ) ?: [];
+			$is_list = array_is_list( $param->terms );
 
 			foreach ( $param->terms as $key => $label ) {
-				$key   = is_string( $key ) ? $key : $label;
+				$key   = $is_list ? $label : $key;
 				$input = vsprintf( '<input type="checkbox" name="%s[]" value="%s"%s>', [
 					esc_attr( $param->option ),
 					esc_attr( $key ),
@@ -343,6 +344,7 @@ class Settings_Page {
 			$whitelist  = array_flip( [ 'maxlength', 'minlength', 'readonly', 'disabled' ] );
 			$attributes = array_intersect_key( (array) $param, $whitelist );
 			$value      = esc_attr( get_option( $param->option, $param->default ) );
+			$is_list    = array_is_list( $param->terms );
 
 			vprintf( '<select id="%s" class="%s" style="%s" name="%s"%s>', [
 				esc_attr( $param->option ),
@@ -353,7 +355,7 @@ class Settings_Page {
 			] );
 
 			foreach ( $param->terms as $key => $label ) {
-				$key = is_string( $key ) ? $key : $label;
+				$key = $is_list ? $label : $key;
 
 				vprintf( '<option value="%s"%s>%s</option>', [
 					esc_attr( $key ),
@@ -409,10 +411,11 @@ class Settings_Page {
 			}
 
 			printf( '<p class="description">%s</p>', wp_kses_post( $param->description ) );
-			$value = get_option( $param->option ) ?: '';
+			$value   = get_option( $param->option ) ?: '';
+			$is_list = array_is_list( $param->terms );
 
 			foreach ( $param->terms as $key => $label ) {
-				$key   = is_string( $key ) ? $key : $label;
+				$key   = $is_list ? $label : $key;
 				$input = vsprintf( '<input type="radio" name="%s" value="%s"%s>', [
 					esc_attr( $param->option ),
 					esc_attr( $key ),
