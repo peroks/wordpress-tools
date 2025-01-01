@@ -219,6 +219,8 @@ class Settings_Page {
 	 *     default: integer,
 	 *     label: string,
 	 *     description: string|string[],
+	 *     class: string,
+	 *     style: string,
 	 * } $args An array of arguments.
 	 */
 	public function add_checkbox( array $args ): void {
@@ -228,6 +230,8 @@ class Settings_Page {
 			'default'     => 0,
 			'label'       => '',
 			'description' => '',
+			'class'       => '',
+			'style'       => '',
 		] );
 
 		register_setting( $this->slug, $param->option, [
@@ -239,8 +243,10 @@ class Settings_Page {
 		] );
 
 		add_settings_field( $param->option, $param->label, function () use ( $param ) {
-			vprintf( '<input type="checkbox" id="%s" name="%s" value="1" %s>', [
+			vprintf( '<input type="checkbox" id="%s" class="%s" style="%s" name="%s" value="1" %s>', [
 				esc_attr( $param->option ),
+				esc_attr( $param->class ),
+				esc_attr( $param->style ),
 				esc_attr( $param->option ),
 				checked( get_option( $param->option ), 1, false ),
 			] );
@@ -264,6 +270,8 @@ class Settings_Page {
 	 *     default: integer,
 	 *     label: string,
 	 *     description: string|string[],
+	 *     class: string,
+	 *     style: string,
 	 *     terms: string[],
 	 * } $args An array of arguments.
 	 */
@@ -274,6 +282,8 @@ class Settings_Page {
 			'default'     => [],
 			'label'       => '',
 			'description' => '',
+			'class'       => '',
+			'style'       => '',
 			'terms'       => [],
 		] );
 
@@ -281,9 +291,8 @@ class Settings_Page {
 			'type'              => 'array',
 			'default'           => $param->default,
 			'sanitize_callback' => $param->sanitize ?? function ( $value ) use ( $param ): array { // phpcs:ignore
-				$value   = (array) $value;
-				$is_list = array_is_list( $param->terms );
-				return $is_list ? array_map( 'sanitize_text_field', $value ) : array_map( 'intval', $value );
+				$value = $value ?: [];
+				return array_map( 'sanitize_text_field', (array) $value );
 			},
 		] );
 
@@ -298,7 +307,9 @@ class Settings_Page {
 
 			foreach ( $param->terms as $key => $label ) {
 				$key   = $is_list ? $label : $key;
-				$input = vsprintf( '<input type="checkbox" name="%s[]" value="%s"%s>', [
+				$input = vsprintf( '<input type="checkbox" class="%s" style="%s" name="%s[]" value="%s"%s>', [
+					esc_attr( $param->class ),
+					esc_attr( $param->style ),
 					esc_attr( $param->option ),
 					esc_attr( $key ),
 					in_array( $key, $value, true ) ? ' checked' : '',
@@ -319,6 +330,8 @@ class Settings_Page {
 	 *     default: integer,
 	 *     label: string,
 	 *     description: string|string[],
+	 *     class: string,
+	 *     style: string,
 	 *     terms: string[],
 	 * } $args An array of arguments.
 	 */
@@ -386,6 +399,8 @@ class Settings_Page {
 	 *     default: string,
 	 *     label: string,
 	 *     description: string|string[],
+	 *     class: string,
+	 *     style: string,
 	 *     terms: string[],
 	 * } $args An array of arguments.
 	 */
@@ -396,6 +411,8 @@ class Settings_Page {
 			'default'     => '',
 			'label'       => '',
 			'description' => '',
+			'class'       => '',
+			'style'       => '',
 			'terms'       => [],
 		] );
 
@@ -418,7 +435,9 @@ class Settings_Page {
 
 			foreach ( $param->terms as $key => $label ) {
 				$key   = $is_list ? $label : $key;
-				$input = vsprintf( '<input type="radio" name="%s" value="%s"%s>', [
+				$input = vsprintf( '<input type="radio" class="%s" style="%s" name="%s" value="%s"%s>', [
+					esc_attr( $param->class ),
+					esc_attr( $param->style ),
 					esc_attr( $param->option ),
 					esc_attr( $key ),
 					$key === $value ? ' checked' : '',
@@ -439,6 +458,8 @@ class Settings_Page {
 	 *     default: integer,
 	 *     label: string,
 	 *     description: string|string[],
+	 *     class: string,
+	 *     style: string,
 	 * } $args An array of arguments.
 	 */
 	public function add_number( array $args ): void {
@@ -448,6 +469,8 @@ class Settings_Page {
 			'default'     => 0,
 			'label'       => '',
 			'description' => '',
+			'class'       => 'small-text',
+			'style'       => '',
 		] );
 
 		register_setting( $this->slug, $param->option, [
@@ -462,8 +485,10 @@ class Settings_Page {
 			$whitelist  = array_flip( [ 'max', 'min', 'step', 'readonly', 'disabled' ] );
 			$attributes = array_intersect_key( (array) $param, $whitelist );
 
-			vprintf( '<input type="number" id="%s" class="small-text" name="%s" value="%d"%s>', [
+			vprintf( '<input type="number" id="%s" class="%s" style="%s" name="%s" value="%d"%s>', [
 				esc_attr( $param->option ),
+				esc_attr( $param->class ),
+				esc_attr( $param->style ),
 				esc_attr( $param->option ),
 				esc_attr( get_option( $param->option, $param->default ) ), //phpcs:ignore
 				$this->array_to_attr( $attributes ), //phpcs:ignore
@@ -488,6 +513,8 @@ class Settings_Page {
 	 *     default: integer,
 	 *     label: string,
 	 *     description: string|string[],
+	 *     class: string,
+	 *     style: string,
 	 * } $args An array of arguments.
 	 */
 	public function add_text( array $args ): void {
@@ -497,6 +524,8 @@ class Settings_Page {
 			'default'     => '',
 			'label'       => '',
 			'description' => '',
+			'class'       => 'regular-text',
+			'style'       => '',
 		] );
 
 		register_setting( $this->slug, $param->option, [
@@ -511,8 +540,10 @@ class Settings_Page {
 			$whitelist  = array_flip( [ 'maxlength', 'minlength', 'readonly', 'disabled' ] );
 			$attributes = array_intersect_key( (array) $param, $whitelist );
 
-			vprintf( '<input type="text" id="%s" class="regular-text" name="%s" value="%s"%s>', [
+			vprintf( '<input type="text" id="%s" class="%s" style="%s" name="%s" value="%s"%s>', [
 				esc_attr( $param->option ),
+				esc_attr( $param->class ),
+				esc_attr( $param->style ),
 				esc_attr( $param->option ),
 				esc_attr( get_option( $param->option, $param->default ) ), //phpcs:ignore
 				$this->array_to_attr( $attributes ), //phpcs:ignore
@@ -535,6 +566,8 @@ class Settings_Page {
 	 *     default: integer,
 	 *     label: string,
 	 *     description: string|string[],
+	 *     class: string,
+	 *     style: string,
 	 * } $args An array of arguments.
 	 */
 	public function add_password( array $args ): void {
@@ -544,6 +577,8 @@ class Settings_Page {
 			'default'     => '',
 			'label'       => '',
 			'description' => '',
+			'class'       => 'regular-text',
+			'style'       => '',
 		] );
 
 		register_setting( $this->slug, $param->option, [
@@ -558,11 +593,69 @@ class Settings_Page {
 			$whitelist  = array_flip( [ 'maxlength', 'minlength', 'readonly', 'disabled' ] );
 			$attributes = array_intersect_key( (array) $param, $whitelist );
 
-			vprintf( '<input type="password" id="%s" class="regular-text" name="%s" value="%s"%s>', [
+			vprintf( '<input type="password" id="%s" class="%s" style="%s" name="%s" value="%s"%s>', [
 				esc_attr( $param->option ),
+				esc_attr( $param->class ),
+				esc_attr( $param->style ),
 				esc_attr( $param->option ),
 				esc_attr( get_option( $param->option, $param->default ) ), //phpcs:ignore
 				$this->array_to_attr( $attributes ), //phpcs:ignore
+			] );
+
+			if ( is_array( $param->description ) ) {
+				$param->description = join( ' ', $param->description );
+			}
+
+			printf( '<p class="description">%s</p>', wp_kses_post( $param->description ) );
+		}, $this->slug, $param->section, [ 'label_for' => esc_attr( $param->option ) ] );
+	}
+
+	/**
+	 * Adds a textarea to a section on an admin page.
+	 *
+	 * @param array{
+	 *     option: string,
+	 *     section: string,
+	 *     default: array,
+	 *     label: string,
+	 *     description: string|string[],
+	 *     class: string,
+	 *     style: string,
+	 *     rows: integer,
+	 * } $args An array of arguments.
+	 */
+	public function add_textarea( array $args ): void {
+		$param = (object) wp_parse_args( $args, [
+			'option'      => '',
+			'section'     => 'default',
+			'default'     => '',
+			'label'       => '',
+			'description' => '',
+			'class'       => 'regular-text',
+			'style'       => '',
+			'rows'        => 10,
+		] );
+
+		register_setting( $this->slug, $param->option, [
+			'type'              => 'string',
+			'default'           => $param->default,
+			'sanitize_callback' => $param->sanitize ?? function ( mixed $value ): string { // phpcs:ignore
+				return sanitize_textarea_field( trim( (string) $value ) );
+			},
+		] );
+
+		add_settings_field( $param->option, $param->label, function () use ( $param ) {
+			$whitelist  = array_flip( [ 'maxlength', 'minlength', 'readonly', 'disabled' ] );
+			$attributes = array_intersect_key( (array) $param, $whitelist );
+
+			vprintf( '<textarea id="%s" class="%s" style="%s" rows="%d" name="%s"%s>%s</textarea>', [
+				esc_attr( $param->option ),
+				esc_attr( $param->class ),
+				esc_attr( $param->style ),
+				intval( $param->rows ),
+				esc_attr( $param->option ),
+				$this->array_to_attr( $attributes ), //phpcs:ignore
+				wp_kses_post( get_option( $param->option, $param->default ) ),
 			] );
 
 			if ( is_array( $param->description ) ) {
@@ -582,6 +675,8 @@ class Settings_Page {
 	 *     default: array,
 	 *     label: string,
 	 *     description: string|string[],
+	 *     class: string,
+	 *     style: string,
 	 *     rows: integer,
 	 * } $args An array of arguments.
 	 */
@@ -592,6 +687,8 @@ class Settings_Page {
 			'default'     => [],
 			'label'       => '',
 			'description' => '',
+			'class'       => 'regular-text',
+			'style'       => '',
 			'rows'        => 10,
 		] );
 
@@ -606,14 +703,17 @@ class Settings_Page {
 		] );
 
 		add_settings_field( $param->option, $param->label, function () use ( $param ) {
-			$whitelist  = array_flip( [ 'maxlength', 'minlength', 'readonly', 'disabled', 'rows' ] );
+			$whitelist  = array_flip( [ 'maxlength', 'minlength', 'readonly', 'disabled' ] );
 			$attributes = array_intersect_key( (array) $param, $whitelist );
 
-			vprintf( '<textarea id="%s" class="regular-text" rows="10" name="%s"%s>%s</textarea>', [
+			vprintf( '<textarea id="%s" class="%s" style="%s" rows="%d" name="%s"%s>%s</textarea>', [
 				esc_attr( $param->option ),
+				esc_attr( $param->class ),
+				esc_attr( $param->style ),
+				intval( $param->rows ),
 				esc_attr( $param->option ),
 				$this->array_to_attr( $attributes ), //phpcs:ignore
-				esc_html( join( "\n", get_option( $param->option, $param->default ) ) ), //phpcs:ignore
+				wp_kses_post( join( "\n", get_option( $param->option, $param->default ) ) ),
 			] );
 
 			if ( is_array( $param->description ) ) {
@@ -634,7 +734,7 @@ class Settings_Page {
 	protected function array_to_attr( array $attr = [] ): string {
 		$call = function ( string $key, $value ): string { // phpcs:ignore
 			if ( is_bool( $value ) && $value ) {
-				return sanitize_key( $key ) . '="' . esc_attr( $key ) . '"';
+				return sanitize_key( $key );
 			}
 			if ( ! is_bool( $value ) ) {
 				return sanitize_key( $key ) . '="' . esc_attr( $value ) . '"';
