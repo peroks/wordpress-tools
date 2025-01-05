@@ -173,8 +173,8 @@ class Settings_Page {
 			printf( '<h1>%s</h1>', esc_html( get_admin_page_title() ) );
 			printf( '<form method="post" action="options.php">' );
 
-			settings_fields( $this->slug );         // Group name.
-			do_settings_sections( $this->slug );    // Menu page slug.
+			settings_fields( $this->slug );
+			do_settings_sections( $this->slug );
 			submit_button();
 
 			printf( '</form>' );
