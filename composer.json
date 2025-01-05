@@ -3,7 +3,7 @@
 	"description": "Basic tools and classes for use in other WordPress plugins.",
 	"license": "MIT",
 	"type": "wordpress-plugin",
-	"version": "0.2.6",
+	"version": "0.2.7",
 	"authors": [
 		{
 			"name": "Per Egil Roksvaag",
